@@ -1,7 +1,7 @@
 import Exponent, { Asset, AppLoading } from 'expo';
 import React, { Component } from 'react';
 import { StatusBar, View, Text } from 'react-native';
-import RoundButton from './src/components/button/RoundButton';
+import Test from './src/components/card/CardWithImage';
 import colors from 'HSColors';
 
 class App extends Component {
@@ -9,7 +9,7 @@ class App extends Component {
     return (
       <View>
         <StatusBar barStyle="light-content" />
-        <RoundButton />
+        <Test />
       </View>
     )
   }
