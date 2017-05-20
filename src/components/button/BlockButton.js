@@ -8,19 +8,22 @@ import socialColors from 'HSSocialColors';
 import fonts from 'HSFonts';
 
 export default class BlockButton extends Component {
+  log() {
+    console.log("flag");
+  }
   render() {
-    console.log(colors);
     return (
       <ScrollView>
         <View style={styles.hero}>
           <Icon color="white" name="whatshot" size={62} type="material" />
-          <Text style={styles.heading}>Buttons & Icons</Text>
+          <Text style={styles.heading}>Block Buttons</Text>
         </View>
         <Button
           buttonStyle={[styles.button]}
           backgroundColor={colors.primary}
           icon={{ name: 'account', type: 'material-community' }}
           title="Got to Buttons Detail View"
+          onPress={() => {this.log()}}
         />
 
         <Button
