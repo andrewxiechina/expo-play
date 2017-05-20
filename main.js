@@ -1,89 +1,65 @@
-import Exponent, { Asset, AppLoading } from 'expo';
-import React, { Component } from 'react';
-import { StatusBar } from 'react-native';
-import DrawerNavigationExample from './components/DrawerNavigationExample';
-import HomeScreen from './components/HomeScreen';
-import AboutScreen from './components/AboutScreen';
-import TabNavigationExample from './components/TabNavigationExample';
-import SlidingTabNavigationExample
-  from './components/SlidingTabNavigationExample';
-import AlertBarsExample from './components/AlertBarsExample';
-import TranslucentBarExample from './components/TranslucentBarExample';
-import EventEmitterExample from './components/EventEmitterExample';
-import CustomNavigationBarExample
-  from './components/CustomNavigationBarExample';
+import Expo from 'expo';
+import React from 'react';
+import { View, Image, Dimensions } from 'react-native';
+import { DrawerNavigator, DrawerItems } from 'react-navigation';
+import { Icon } from 'react-native-elements';
 
-import { createRouter, NavigationProvider } from '@expo/ex-navigation';
+import Home from './src/drawer/home';
+import SwipeDecker from './src/drawer/swipe_decker';
+import Ratings from './src/drawer/ratings';
+import Pricing from './src/drawer/pricing';
 
-const assets = [
-  require('./assets/beetle.jpg'),
-  require('./assets/cat.gif'),
-  require('./assets/colorful-windows.jpg'),
-  require('./assets/paintbrush.jpg'),
-  require('./assets/space.jpg'),
-  require('./assets/sparkles.jpg'),
-];
+const SCREEN_WIDTH = Dimensions.get('window').width;
 
-/**
-  * This is where we map route names to route components. Any React
-  * component can be a route, it only needs to have a static `route`
-  * property defined on it, as in HomeScreen below
-  */
-export const Router = createRouter(() => ({
-  home: () => HomeScreen,
-  about: () => AboutScreen,
-  tabNavigationExample: () => TabNavigationExample,
-  slidingTabNavigationExample: () => SlidingTabNavigationExample,
-  alertBarsExample: () => AlertBarsExample,
-  translucentBarExample: () => TranslucentBarExample,
-  eventEmitterExample: () => EventEmitterExample,
-  customNavigationBarExample: () => CustomNavigationBarExample,
-}));
+const CustomDrawerContentComponent = props => (
+  <View style={{ flex: 1, backgroundColor: '#43484d' }}>
+    <View
+      style={{ marginTop: 40, justifyContent: 'center', alignItems: 'center' }}
+    >
+      <Image
+        source={require('./src/images/logo.png')}
+        style={{ width: SCREEN_WIDTH * 0.57 }}
+        resizeMode="contain"
+      />
+    </View>
+    <DrawerItems {...props} />
+  </View>
+);
 
-class App extends Component {
-  state = {
-    bootstrapped: false,
-  };
-
-  componentDidMount() {
-    this._bootstrap();
+const MainRoot = DrawerNavigator(
+  {
+    Home: {
+      path: '/home',
+      screen: Home,
+    },
+    SwipeDecker: {
+      path: '/swiper_decker',
+      screen: SwipeDecker,
+    },
+    Ratings: {
+      path: '/ratings',
+      screen: Ratings,
+    },
+    Pricing: {
+      path: '/pricing',
+      screen: Pricing,
+    },
+  },
+  {
+    initialRouteName: 'Home',
+    contentOptions: {
+      activeTintColor: '#548ff7',
+      activeBackgroundColor: 'transparent',
+      inactiveTintColor: '#ffffff',
+      inactiveBackgroundColor: 'transparent',
+      labelStyle: {
+        fontSize: 15,
+        marginLeft: 0,
+      },
+    },
+    drawerWidth: SCREEN_WIDTH * 0.8,
+    contentComponent: CustomDrawerContentComponent,
   }
+);
 
-  _bootstrap = async () => {
-    const promises = assets.map(module =>
-      Asset.fromModule(module).downloadAsync()
-    );
-    await Promise.all(promises);
-    this.setState({
-      bootstrapped: true,
-    });
-  };
-
-  render() {
-    if (!this.state.bootstrapped) {
-      return <AppLoading />;
-    }
-
-    /**
-      * NavigationProvider is only needed at the top level of the app,
-      * similar to react-redux's Provider component. It passes down
-      * navigation objects and functions through context to children.
-      *
-      * StackNavigation represents a single stack of screens, you can
-      * think of a stack like a stack of playing cards, and each time
-      * you add a screen it slides in on top. Stacks can contain
-      * other stacks, for example if you have a tab bar, each of the
-      * tabs has its own individual stack. This is where the playing
-      * card analogy falls apart, but it's still useful when thinking
-      * of individual stacks.
-      */
-    return (
-      <NavigationProvider router={Router}>
-        <StatusBar barStyle="light-content" />
-        <DrawerNavigationExample />
-      </NavigationProvider>
-    );
-  }
-}
-
-Exponent.registerRootComponent(App);
+Expo.registerRootComponent(MainRoot);
