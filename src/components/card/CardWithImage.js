@@ -16,7 +16,7 @@ export default class CardWithImage extends Component {
       <ScrollView>
         <View style={styles.hero}>
           <Icon color="white" name="whatshot" size={62} type="material" />
-          <Text style={styles.heading}>Basic Cards</Text>
+          <Text style={styles.heading}>Card with Image</Text>
         </View>
         <Card image={{url: 'https://1821662466.rsc.cdn77.org/images/moocs.jpg'}}>
         <Text h4>Hello world!</Text>
