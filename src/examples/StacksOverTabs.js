@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, ScrollView, View, Text, } from 'react-native';
-import { StackNavigator, TabNavigator, TabView, TabBarTop } from 'react-navigation';
+import { StackNavigator, TabNavigator, DrawerNavigator, TabView, TabBarTop } from 'react-navigation';
 import { SearchBar, Icon, Grid, Row, Col } from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons';
 import SampleText from './SampleText';
@@ -76,6 +76,7 @@ class CustomTabBarTop extends React.Component {
               name='ios-menu'
               type='ionicon'
               color='white'
+              onPress={() => this.props.navigation.navigate('DrawerOpen')}
               />
           </Col>
           <Col size={9}>
@@ -97,11 +98,6 @@ class CustomTabBarTop extends React.Component {
           </Col>
         </Row>
        </Grid>
-        <View style={{flexDirection: 'row'}}>
-
-
-
-        </View>
         <TabBarTop {...this.props}/>
       </View>
     )
@@ -202,6 +198,19 @@ const TabNavigatorConfig = {
 
 
 const TabNav = TabNavigator(generateTabRoute(TabNavigatorRoute) ,TabNavigatorConfig);
+
+
+const DrawerExample = DrawerNavigator(
+  {
+    Tabs: {
+      path: '/',
+      screen: TabNav,
+    },
+  },
+  {
+    initialRouteName: 'Tabs',
+  }
+);
 
 
 function generateTabRoute(TabNavigatorRoute) {
