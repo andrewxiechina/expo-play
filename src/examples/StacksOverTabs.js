@@ -200,17 +200,6 @@ const TabNavigatorConfig = {
 const TabNav = TabNavigator(generateTabRoute(TabNavigatorRoute) ,TabNavigatorConfig);
 
 
-const DrawerExample = DrawerNavigator(
-  {
-    Tabs: {
-      path: '/',
-      screen: TabNav,
-    },
-  },
-  {
-    initialRouteName: 'Tabs',
-  }
-);
 
 
 function generateTabRoute(TabNavigatorRoute) {
